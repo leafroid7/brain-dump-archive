@@ -6,179 +6,85 @@
   <title>Brain Dump Archive</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #f5f5f0;
-      color: #1a1a1a;
-      min-height: 100vh;
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; min-height: 100vh; }
 
     /* 상단 바 */
-    .topbar {
-      position: sticky; top: 0; z-index: 100;
-      background: #fff;
-      border-bottom: 1px solid #e5e5e5;
-      padding: 14px 20px;
-      display: flex; align-items: center; gap: 12px;
-    }
+    .topbar { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #e5e5e5; padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
     .topbar h1 { font-size: 15px; font-weight: 700; flex: 1; }
-    .btn-add {
-      background: #1a1a1a; color: #fff;
-      border: none; border-radius: 8px;
-      padding: 8px 14px; font-size: 13px; cursor: pointer;
-      white-space: nowrap;
-    }
+    .btn-add { background: #1a1a1a; color: #fff; border: none; border-radius: 8px; padding: 8px 14px; font-size: 13px; cursor: pointer; white-space: nowrap; }
     .btn-add:hover { background: #333; }
 
     /* PARA 탭 */
-    .para-bar {
-      background: #fff;
-      border-bottom: 1px solid #e5e5e5;
-      display: flex; gap: 0;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
+    .para-bar { background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; overflow-x: auto; scrollbar-width: none; }
     .para-bar::-webkit-scrollbar { display: none; }
-    .para-btn {
-      padding: 9px 16px; font-size: 12px; font-weight: 500;
-      border: none; background: none; cursor: pointer;
-      color: #888; white-space: nowrap;
-      border-bottom: 2px solid transparent;
-      transition: all 0.15s;
-    }
+    .para-btn { padding: 10px 16px; font-size: 12px; font-weight: 500; border: none; background: none; cursor: pointer; color: #999; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.15s; }
     .para-btn:hover { color: #333; }
-    .para-btn.active { color: #1a1a1a; border-bottom-color: #1a1a1a; }
+    .para-btn.active { color: #e8600a; border-bottom-color: #e8600a; font-weight: 700; }
 
-    /* 폴더 필터 */
-    .folder-bar {
-      background: #fafafa;
-      border-bottom: 1px solid #e5e5e5;
-      padding: 8px 16px;
-      display: flex; gap: 6px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
+    /* 폴더 필터 — 어두운 배경 */
+    .folder-bar { background: #2a2a2a; padding: 8px 16px; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
     .folder-bar::-webkit-scrollbar { display: none; }
-    .folder-btn {
-      padding: 4px 12px; border-radius: 20px; font-size: 12px;
-      border: 1px solid #ddd; background: #fff; cursor: pointer;
-      color: #555; white-space: nowrap;
-      transition: all 0.15s;
-    }
-    .folder-btn:hover { border-color: #999; }
-    .folder-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .folder-btn { padding: 4px 10px; border-radius: 20px; font-size: 11px; border: 1px solid #444; background: #3a3a3a; cursor: pointer; color: #ccc; white-space: nowrap; transition: all 0.15s; display: inline-flex; align-items: center; gap: 4px; }
+    .folder-btn:hover { border-color: #888; color: #fff; }
+    .folder-btn.active { background: #e8600a; color: #fff; border-color: #e8600a; }
+    .folder-icon { font-size: 12px; }
+
+    /* IPOR 컬러 도트 */
+    .ipor-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .ipor-INPUT   { background: #f87171; }
+    .ipor-PROCESS { background: #fbbf24; }
+    .ipor-OUTPUT  { background: #34d399; }
+    .ipor-REST    { background: #94a3b8; }
 
     /* 상태 필터 */
-    .status-bar {
-      background: #f5f5f0;
-      padding: 8px 16px;
-      display: flex; gap: 6px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
+    .status-bar { background: #f5f5f0; padding: 8px 16px; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
     .status-bar::-webkit-scrollbar { display: none; }
-    .status-btn {
-      padding: 4px 12px; border-radius: 20px; font-size: 11px;
-      border: 1px solid #ddd; background: #fff; cursor: pointer;
-      color: #666; white-space: nowrap;
-      transition: all 0.15s;
-    }
+    .status-btn { padding: 4px 12px; border-radius: 20px; font-size: 11px; border: 1px solid #ddd; background: #fff; cursor: pointer; color: #666; white-space: nowrap; transition: all 0.15s; }
     .status-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
 
     /* 갤러리 */
-    .gallery {
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 14px;
-    }
+    .gallery { padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
 
     /* 카드 */
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      border: 1px solid #e5e5e5;
-      padding: 16px;
-      cursor: pointer;
-      transition: box-shadow 0.15s, transform 0.15s;
-    }
+    .card { background: #fff; border-radius: 12px; border: 1px solid #e5e5e5; padding: 16px; cursor: pointer; transition: box-shadow 0.15s, transform 0.15s; }
     .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); transform: translateY(-2px); }
-
     .card-title { font-size: 14px; font-weight: 600; line-height: 1.4; margin-bottom: 8px; }
-
-    .card-content {
-      font-size: 12px; color: #666; line-height: 1.5;
-      margin-bottom: 10px;
-      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
+    .card-content { font-size: 12px; color: #666; line-height: 1.5; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     .card-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
 
-    /* 활용도 배지 */
-    .badge-status {
-      font-size: 10px; padding: 2px 7px; border-radius: 20px; font-weight: 500;
-    }
-    .badge-status::before { content: '활용도 '; color: inherit; opacity: 0.6; font-weight: 400; }
-    .s-분류전    { background: #f0f0f0; color: #777; }
-    .s-저장      { background: #e8f4fd; color: #3a86c8; }
-    .s-필요      { background: #fff0e0; color: #d4870a; }
-    .s-폐기      { background: #fde8e8; color: #c84040; }
+    /* 활용도 배지 — 노션 스타일 도트 */
+    .badge-status { font-size: 11px; padding: 2px 8px; border-radius: 20px; display: inline-flex; align-items: center; gap: 5px; font-weight: 500; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .s-분류전 { background: #f0f0f0; color: #777; }
+    .s-분류전 .status-dot { background: #bbb; }
+    .s-저장   { background: #e8f4fd; color: #3a86c8; }
+    .s-저장   .status-dot { background: #3a86c8; }
+    .s-필요   { background: #fff0e0; color: #d4870a; }
+    .s-필요   .status-dot { background: #d4870a; }
+    .s-폐기   { background: #f0e8fd; color: #9b5de5; }
+    .s-폐기   .status-dot { background: #9b5de5; }
 
     /* 폴더 배지 */
-    .badge-folder {
-      font-size: 10px; padding: 2px 7px; border-radius: 20px;
-      background: #f0f0f0; color: #555;
-      display: inline-flex; align-items: center; gap: 3px;
-    }
-    .badge-folder::before { content: '📁'; font-size: 10px; }
+    .badge-folder { font-size: 10px; padding: 2px 7px; border-radius: 20px; background: #f0f0f0; color: #555; display: inline-flex; align-items: center; gap: 4px; }
+    .badge-folder-icon { font-size: 11px; }
+    .badge-para { font-size: 9px; color: #999; font-weight: 400; }
 
     /* 링크 버튼 */
-    .card-link {
-      display: inline-flex; align-items: center; gap: 4px;
-      font-size: 11px; color: #3a86c8;
-      background: #e8f4fd; border-radius: 6px;
-      padding: 3px 9px; text-decoration: none;
-      margin-top: 4px;
-      transition: background 0.15s;
-    }
+    .card-link { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: #3a86c8; background: #e8f4fd; border-radius: 6px; padding: 3px 9px; text-decoration: none; margin-top: 4px; transition: background 0.15s; }
     .card-link:hover { background: #c8e4f8; }
-    .card-link::before { content: '🔗'; font-size: 11px; }
 
     /* 스피너 */
     .spinner { display: flex; justify-content: center; padding: 60px; font-size: 13px; color: #aaa; }
 
-    /* 모달 오버레이 */
-    .modal-overlay {
-      display: none; position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.4); z-index: 200;
-      align-items: center; justify-content: center;
-      padding: 20px;
-    }
+    /* 모달 */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.open { display: flex; }
-
-    .modal {
-      background: #fff; border-radius: 16px;
-      padding: 24px; width: 100%; max-width: 460px;
-      max-height: 90vh; overflow-y: auto;
-    }
+    .modal { background: #fff; border-radius: 16px; padding: 24px; width: 100%; max-width: 460px; max-height: 90vh; overflow-y: auto; }
     .modal h2 { font-size: 15px; font-weight: 700; margin-bottom: 18px; }
-
     .form-group { margin-bottom: 14px; }
     .form-group label { display: block; font-size: 11px; color: #888; margin-bottom: 5px; font-weight: 600; letter-spacing: 0.03em; }
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%; padding: 9px 11px; border-radius: 8px;
-      border: 1px solid #e0e0e0; font-size: 13px;
-      font-family: inherit; resize: vertical;
-    }
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus { outline: none; border-color: #1a1a1a; }
-
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 9px 11px; border-radius: 8px; border: 1px solid #e0e0e0; font-size: 13px; font-family: inherit; resize: vertical; }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: #1a1a1a; }
     .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
     .btn-cancel { padding: 8px 16px; border-radius: 8px; font-size: 13px; border: 1px solid #e0e0e0; background: #fff; cursor: pointer; }
     .btn-save { padding: 8px 16px; border-radius: 8px; font-size: 13px; border: none; background: #1a1a1a; color: #fff; cursor: pointer; }
@@ -194,7 +100,6 @@
     <button class="btn-add" onclick="openAddModal()">＋ 메모 추가</button>
   </div>
 
-  <!-- PARA 탭 -->
   <div class="para-bar" id="paraBar">
     <button class="para-btn active" onclick="setPara(null, this)">전체</button>
     <button class="para-btn" onclick="setPara('pending', this)">Pending</button>
@@ -204,12 +109,10 @@
     <button class="para-btn" onclick="setPara('𝗔 | 보관함', this)">𝗔 보관함</button>
   </div>
 
-  <!-- 폴더 필터 -->
   <div class="folder-bar" id="folderBar">
     <button class="folder-btn active" onclick="setFolder(null, this)">전체</button>
   </div>
 
-  <!-- 상태 필터 -->
   <div class="status-bar">
     <button class="status-btn active" onclick="setStatus(null, this)">전체</button>
     <button class="status-btn" onclick="setStatus('분류 전', this)">분류 전</button>
@@ -222,7 +125,6 @@
     <div class="spinner">불러오는 중...</div>
   </div>
 
-  <!-- 모달 -->
   <div class="modal-overlay" id="memoModal">
     <div class="modal">
       <h2 id="modalTitle">메모 추가</h2>
@@ -266,13 +168,27 @@
     let currentFolder = null;
     let currentStatus = null;
     let editingId = null;
-    let pendingFolderId = null; // Pending/Memo Box의 page id
+    let pendingFolderId = null;
 
     const STATUS_CLASS = {
       '분류 전': 's-분류전',
       '만약을 위해 저장': 's-저장',
       '꼭 필요함!!': 's-필요',
       '폐기': 's-폐기'
+    };
+
+    const PARA_SHORT = {
+      '𝗣 | 현재 진행': 'P',
+      '𝗔 | 상시 진행': 'A',
+      '𝗥 | 관심분야': 'R',
+      '𝗔 | 보관함': 'A'
+    };
+
+    const IPOR_CLASS = {
+      'INPUT': 'ipor-INPUT',
+      'PROCESS': 'ipor-PROCESS',
+      'OUTPUT': 'ipor-OUTPUT',
+      'REST': 'ipor-REST'
     };
 
     async function init() {
@@ -303,12 +219,10 @@
         allMemos = data.memos || [];
         renderGallery();
       } catch(e) {
-        console.error('메모 로드 실패:', e);
-        document.getElementById('gallery').innerHTML = '<div class="empty">데이터를 불러오지 못했어요. F12 콘솔을 확인해주세요.</div>';
+        document.getElementById('gallery').innerHTML = '<div class="empty">데이터를 불러오지 못했어요.</div>';
       }
     }
 
-    /* 폴더 필터 바 렌더링 */
     function renderFolderBar() {
       const bar = document.getElementById('folderBar');
       bar.innerHTML = '<button class="folder-btn active" onclick="setFolder(null, this)">전체</button>';
@@ -322,7 +236,12 @@
       filtered.forEach(f => {
         const btn = document.createElement('button');
         btn.className = 'folder-btn';
-        btn.textContent = f.name;
+
+        const iconEl = f.icon ? `<span class="folder-icon">${f.icon}</span>` : '';
+        const dotClass = f.ipor ? IPOR_CLASS[f.ipor] || '' : '';
+        const dotEl = dotClass ? `<span class="ipor-dot ${dotClass}"></span>` : '';
+        btn.innerHTML = `${dotEl}${iconEl}${escHtml(f.name)}`;
+
         btn.onclick = () => {
           document.querySelectorAll('.folder-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
@@ -332,11 +251,9 @@
       });
     }
 
-    /* 모달 폴더 셀렉트 */
     function populateFolderSelect() {
       const sel = document.getElementById('fieldFolder');
       sel.innerHTML = '';
-      // Pending/Memo Box를 맨 위에
       if (pendingFolderId) {
         const opt = document.createElement('option');
         opt.value = pendingFolderId;
@@ -352,14 +269,12 @@
       });
     }
 
-    /* 갤러리 렌더링 */
     function renderGallery() {
       const gallery = document.getElementById('gallery');
       let memos = allMemos;
 
       if (currentStatus) memos = memos.filter(m => m.status === currentStatus);
 
-      // PARA 탭 필터 (서버에서 folder_id로 필터링 안 한 경우에만 클라이언트 필터)
       if (currentPara && !currentFolder) {
         const paraFolderIds = currentPara === 'pending'
           ? folders.filter(f => !f.para).map(f => f.id)
@@ -374,13 +289,20 @@
 
       gallery.innerHTML = memos.map(m => {
         const sc = STATUS_CLASS[m.status] || 's-분류전';
-        const statusBadge = `<span class="badge-status ${sc}">${escHtml(m.status || '분류 전')}</span>`;
+        const statusLabel = m.status || '분류 전';
+        const statusBadge = `<span class="badge-status ${sc}"><span class="status-dot"></span>${escHtml(statusLabel)}</span>`;
+
         const folderBadges = m.folders
           .filter(id => folderMap[id])
-          .map(id => `<span class="badge-folder">${escHtml(folderMap[id].name)}</span>`)
-          .join('');
+          .map(id => {
+            const f = folderMap[id];
+            const iconEl = f.icon ? `<span class="badge-folder-icon">${f.icon}</span>` : '📁';
+            const paraEl = f.para ? ` <span class="badge-para">${PARA_SHORT[f.para] || ''}</span>` : '';
+            return `<span class="badge-folder">${iconEl}${escHtml(f.name)}${paraEl}</span>`;
+          }).join('');
+
         const linkBtn = m.url
-          ? `<a class="card-link" href="${escHtml(m.url)}" target="_blank" onclick="event.stopPropagation()">링크</a>`
+          ? `<a class="card-link" href="${escHtml(m.url)}" target="_blank" onclick="event.stopPropagation()">🔗 링크</a>`
           : '';
 
         return `
@@ -393,7 +315,6 @@
       }).join('');
     }
 
-    /* PARA 탭 */
     function setPara(val, btn) {
       currentPara = val;
       currentFolder = null;
@@ -403,7 +324,6 @@
       loadMemos();
     }
 
-    /* 폴더 필터 */
     function setFolder(id, btn) {
       currentFolder = id;
       document.querySelectorAll('.folder-btn').forEach(b => b.classList.remove('active'));
@@ -411,7 +331,6 @@
       loadMemos();
     }
 
-    /* 상태 필터 */
     function setStatus(val, btn) {
       currentStatus = val;
       document.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'));
@@ -419,7 +338,6 @@
       renderGallery();
     }
 
-    /* 모달 */
     function openAddModal() {
       editingId = null;
       document.getElementById('modalTitle').textContent = '메모 추가';

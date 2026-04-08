@@ -1,8 +1,8 @@
 const { Client } = require('@notionhq/client');
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
-const MEMO_DB_ID = process.env.NOTION_DATABASE_ID;       // 메모 아카이브 data_source_id
-const FOLDER_DB_ID = process.env.NOTION_FOLDER_DB_ID;   // BRAIN DUMP data_source_id
+const MEMO_DB_ID = process.env.NOTION_DATABASE_ID;
+const FOLDER_DB_ID = process.env.NOTION_FOLDER_DB_ID;
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -15,21 +15,24 @@ module.exports = async (req, res) => {
 
   try {
 
-    // 폴더(BRAIN DUMP) 목록 조회
     if (action === 'getFolders') {
       const response = await notion.dataSources.query({
         data_source_id: FOLDER_DB_ID,
         sorts: [{ property: '이름', direction: 'ascending' }]
       });
-      const folders = response.results.map(page => ({
-        id: page.id,
-        name: page.properties['이름']?.title?.[0]?.plain_text || '(이름 없음)',
-        para: page.properties['P.A.R.A']?.select?.name || null
-      }));
+      const folders = response.results.map(page => {
+        const icon = page.icon?.type === 'emoji' ? page.icon.emoji : null;
+        return {
+          id: page.id,
+          name: page.properties['이름']?.title?.[0]?.plain_text || '(이름 없음)',
+          para: page.properties['P.A.R.A']?.select?.name || null,
+          ipor: page.properties['𝗜.𝗣.𝗢.𝗥']?.select?.name || null,
+          icon
+        };
+      });
       return res.json({ folders });
     }
 
-    // 메모 목록 조회
     if (action === 'getMemos') {
       const filter = req.query.folder_id ? {
         property: 'BRAIN DUMP',
@@ -55,7 +58,6 @@ module.exports = async (req, res) => {
       return res.json({ memos });
     }
 
-    // 메모 추가
     if (action === 'addMemo') {
       const { idea, content, status, url, folder_ids } = req.body;
 
@@ -63,38 +65,26 @@ module.exports = async (req, res) => {
         'IDEA': { title: [{ text: { content: idea || '' } }] },
         'Content': { rich_text: [{ text: { content: content || '' } }] },
         'URL': url ? { url } : { url: null },
-        'BRAIN DUMP': {
-          relation: (folder_ids || []).map(id => ({ id }))
-        }
+        'BRAIN DUMP': { relation: (folder_ids || []).map(id => ({ id })) }
       };
-
-      if (status) {
-        properties['활용도'] = { status: { name: status } };
-      }
+      if (status) properties['활용도'] = { status: { name: status } };
 
       const page = await notion.pages.create({
         parent: { type: 'data_source_id', data_source_id: MEMO_DB_ID },
         properties
       });
-
       return res.json({ success: true, id: page.id });
     }
 
-    // 메모 수정
     if (action === 'updateMemo') {
       const { page_id, idea, content, status, url, folder_ids } = req.body;
 
       const properties = {};
-      if (idea !== undefined)
-        properties['IDEA'] = { title: [{ text: { content: idea } }] };
-      if (content !== undefined)
-        properties['Content'] = { rich_text: [{ text: { content: content } }] };
-      if (url !== undefined)
-        properties['URL'] = url ? { url } : { url: null };
-      if (status !== undefined)
-        properties['활용도'] = { status: { name: status } };
-      if (folder_ids !== undefined)
-        properties['BRAIN DUMP'] = { relation: folder_ids.map(id => ({ id })) };
+      if (idea !== undefined) properties['IDEA'] = { title: [{ text: { content: idea } }] };
+      if (content !== undefined) properties['Content'] = { rich_text: [{ text: { content: content } }] };
+      if (url !== undefined) properties['URL'] = url ? { url } : { url: null };
+      if (status !== undefined) properties['활용도'] = { status: { name: status } };
+      if (folder_ids !== undefined) properties['BRAIN DUMP'] = { relation: folder_ids.map(id => ({ id })) };
 
       await notion.pages.update({ page_id, properties });
       return res.json({ success: true });

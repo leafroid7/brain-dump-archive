@@ -14,77 +14,98 @@
       min-height: 100vh;
     }
 
-    /* ── 상단 바 ── */
+    /* 상단 바 */
     .topbar {
       position: sticky; top: 0; z-index: 100;
       background: #fff;
       border-bottom: 1px solid #e5e5e5;
-      padding: 14px 24px;
+      padding: 14px 20px;
       display: flex; align-items: center; gap: 12px;
     }
-    .topbar h1 { font-size: 16px; font-weight: 700; flex: 1; }
+    .topbar h1 { font-size: 15px; font-weight: 700; flex: 1; }
     .btn-add {
       background: #1a1a1a; color: #fff;
       border: none; border-radius: 8px;
-      padding: 8px 16px; font-size: 13px; cursor: pointer;
+      padding: 8px 14px; font-size: 13px; cursor: pointer;
+      white-space: nowrap;
     }
     .btn-add:hover { background: #333; }
 
-    /* ── 필터 바 ── */
-    .filter-bar {
-      padding: 12px 24px;
-      display: flex; gap: 8px; flex-wrap: wrap;
-      background: #fff; border-bottom: 1px solid #e5e5e5;
+    /* PARA 탭 */
+    .para-bar {
+      background: #fff;
+      border-bottom: 1px solid #e5e5e5;
+      display: flex; gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
-    .filter-btn {
-      padding: 5px 14px; border-radius: 20px; font-size: 12px;
-      border: 1px solid #ddd; background: #fff; cursor: pointer;
+    .para-bar::-webkit-scrollbar { display: none; }
+    .para-btn {
+      padding: 9px 16px; font-size: 12px; font-weight: 500;
+      border: none; background: none; cursor: pointer;
+      color: #888; white-space: nowrap;
+      border-bottom: 2px solid transparent;
       transition: all 0.15s;
     }
-    .filter-btn:hover { border-color: #999; }
-    .filter-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .para-btn:hover { color: #333; }
+    .para-btn.active { color: #1a1a1a; border-bottom-color: #1a1a1a; }
 
-    /* ── 상태 필터 ── */
-    .status-bar {
-      padding: 8px 24px;
-      display: flex; gap: 8px; flex-wrap: wrap;
-      background: #fafafa; border-bottom: 1px solid #e5e5e5;
+    /* 폴더 필터 */
+    .folder-bar {
+      background: #fafafa;
+      border-bottom: 1px solid #e5e5e5;
+      padding: 8px 16px;
+      display: flex; gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
+    .folder-bar::-webkit-scrollbar { display: none; }
+    .folder-btn {
+      padding: 4px 12px; border-radius: 20px; font-size: 12px;
+      border: 1px solid #ddd; background: #fff; cursor: pointer;
+      color: #555; white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .folder-btn:hover { border-color: #999; }
+    .folder-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+
+    /* 상태 필터 */
+    .status-bar {
+      background: #f5f5f0;
+      padding: 8px 16px;
+      display: flex; gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .status-bar::-webkit-scrollbar { display: none; }
     .status-btn {
       padding: 4px 12px; border-radius: 20px; font-size: 11px;
       border: 1px solid #ddd; background: #fff; cursor: pointer;
+      color: #666; white-space: nowrap;
       transition: all 0.15s;
     }
     .status-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
 
-    /* ── 갤러리 ── */
+    /* 갤러리 */
     .gallery {
-      padding: 24px;
+      padding: 20px;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
     }
 
-    /* ── 카드 ── */
+    /* 카드 */
     .card {
       background: #fff;
       border-radius: 12px;
       border: 1px solid #e5e5e5;
-      padding: 18px;
+      padding: 16px;
       cursor: pointer;
       transition: box-shadow 0.15s, transform 0.15s;
-      position: relative;
     }
     .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); transform: translateY(-2px); }
 
-    .card-header { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
-    .card-title { font-size: 14px; font-weight: 600; flex: 1; line-height: 1.4; }
-    .card-edit-btn {
-      background: none; border: none; cursor: pointer;
-      font-size: 13px; color: #aaa; padding: 0 2px;
-      opacity: 0; transition: opacity 0.15s;
-    }
-    .card:hover .card-edit-btn { opacity: 1; }
+    .card-title { font-size: 14px; font-weight: 600; line-height: 1.4; margin-bottom: 8px; }
 
     .card-content {
       font-size: 12px; color: #666; line-height: 1.5;
@@ -93,35 +114,42 @@
       overflow: hidden;
     }
 
-    .card-footer { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .card-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
 
+    /* 활용도 배지 */
     .badge-status {
-      font-size: 10px; padding: 3px 8px; border-radius: 20px; font-weight: 500;
+      font-size: 10px; padding: 2px 7px; border-radius: 20px; font-weight: 500;
     }
-    .badge-status.분류전    { background: #f0f0f0; color: #888; }
-    .badge-status.저장      { background: #e8f4fd; color: #3a86c8; }
-    .badge-status.필요      { background: #fff0e0; color: #d4870a; }
-    .badge-status.폐기      { background: #fde8e8; color: #c84040; }
+    .badge-status::before { content: '활용도 '; color: inherit; opacity: 0.6; font-weight: 400; }
+    .s-분류전    { background: #f0f0f0; color: #777; }
+    .s-저장      { background: #e8f4fd; color: #3a86c8; }
+    .s-필요      { background: #fff0e0; color: #d4870a; }
+    .s-폐기      { background: #fde8e8; color: #c84040; }
 
+    /* 폴더 배지 */
     .badge-folder {
-      font-size: 10px; padding: 3px 8px; border-radius: 20px;
-      background: #f0f0f0; color: #666;
+      font-size: 10px; padding: 2px 7px; border-radius: 20px;
+      background: #f0f0f0; color: #555;
+      display: inline-flex; align-items: center; gap: 3px;
     }
+    .badge-folder::before { content: '📁'; font-size: 10px; }
 
-    .card-url {
-      font-size: 10px; color: #aaa; text-decoration: none;
-      margin-top: 4px; display: block;
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    /* 링크 버튼 */
+    .card-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; color: #3a86c8;
+      background: #e8f4fd; border-radius: 6px;
+      padding: 3px 9px; text-decoration: none;
+      margin-top: 4px;
+      transition: background 0.15s;
     }
-    .card-url:hover { color: #1a1a1a; }
+    .card-link:hover { background: #c8e4f8; }
+    .card-link::before { content: '🔗'; font-size: 11px; }
 
-    /* ── 스피너 ── */
-    .spinner {
-      display: flex; justify-content: center; padding: 60px;
-      font-size: 13px; color: #aaa;
-    }
+    /* 스피너 */
+    .spinner { display: flex; justify-content: center; padding: 60px; font-size: 13px; color: #aaa; }
 
-    /* ── 모달 오버레이 ── */
+    /* 모달 오버레이 */
     .modal-overlay {
       display: none; position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -133,58 +161,56 @@
 
     .modal {
       background: #fff; border-radius: 16px;
-      padding: 28px; width: 90%; max-width: 480px;
+      padding: 24px; width: 100%; max-width: 460px;
       max-height: 90vh; overflow-y: auto;
     }
-    .modal h2 { font-size: 16px; font-weight: 700; margin-bottom: 20px; }
+    .modal h2 { font-size: 15px; font-weight: 700; margin-bottom: 18px; }
 
-    .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 11px; color: #888; margin-bottom: 6px; font-weight: 600; letter-spacing: 0.03em; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 11px; color: #888; margin-bottom: 5px; font-weight: 600; letter-spacing: 0.03em; }
     .form-group input,
     .form-group textarea,
     .form-group select {
-      width: 100%; padding: 10px 12px; border-radius: 8px;
+      width: 100%; padding: 9px 11px; border-radius: 8px;
       border: 1px solid #e0e0e0; font-size: 13px;
       font-family: inherit; resize: vertical;
-      transition: border-color 0.15s;
     }
     .form-group input:focus,
     .form-group textarea:focus,
-    .form-group select:focus {
-      outline: none; border-color: #1a1a1a;
-    }
+    .form-group select:focus { outline: none; border-color: #1a1a1a; }
 
-    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
-    .btn-cancel {
-      padding: 9px 18px; border-radius: 8px; font-size: 13px;
-      border: 1px solid #e0e0e0; background: #fff; cursor: pointer;
-    }
-    .btn-save {
-      padding: 9px 18px; border-radius: 8px; font-size: 13px;
-      border: none; background: #1a1a1a; color: #fff; cursor: pointer;
-    }
-    .btn-save:hover { background: #333; }
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+    .btn-cancel { padding: 8px 16px; border-radius: 8px; font-size: 13px; border: 1px solid #e0e0e0; background: #fff; cursor: pointer; }
+    .btn-save { padding: 8px 16px; border-radius: 8px; font-size: 13px; border: none; background: #1a1a1a; color: #fff; cursor: pointer; }
     .btn-save:disabled { background: #ccc; cursor: not-allowed; }
 
-    /* ── 빈 상태 ── */
     .empty { text-align: center; padding: 60px 24px; color: #aaa; font-size: 13px; }
   </style>
 </head>
 <body>
 
-  <!-- 상단 바 -->
   <div class="topbar">
     <h1>🗂 Brain Dump Archive</h1>
     <button class="btn-add" onclick="openAddModal()">＋ 메모 추가</button>
   </div>
 
+  <!-- PARA 탭 -->
+  <div class="para-bar" id="paraBar">
+    <button class="para-btn active" onclick="setPara(null, this)">전체</button>
+    <button class="para-btn" onclick="setPara('pending', this)">Pending</button>
+    <button class="para-btn" onclick="setPara('𝗣 | 현재 진행', this)">𝗣 현재 진행</button>
+    <button class="para-btn" onclick="setPara('𝗔 | 상시 진행', this)">𝗔 상시 진행</button>
+    <button class="para-btn" onclick="setPara('𝗥 | 관심분야', this)">𝗥 관심분야</button>
+    <button class="para-btn" onclick="setPara('𝗔 | 보관함', this)">𝗔 보관함</button>
+  </div>
+
   <!-- 폴더 필터 -->
-  <div class="filter-bar" id="folderFilter">
-    <button class="filter-btn active" onclick="setFolder(null, this)">전체</button>
+  <div class="folder-bar" id="folderBar">
+    <button class="folder-btn active" onclick="setFolder(null, this)">전체</button>
   </div>
 
   <!-- 상태 필터 -->
-  <div class="status-bar" id="statusFilter">
+  <div class="status-bar">
     <button class="status-btn active" onclick="setStatus(null, this)">전체</button>
     <button class="status-btn" onclick="setStatus('분류 전', this)">분류 전</button>
     <button class="status-btn" onclick="setStatus('만약을 위해 저장', this)">만약을 위해 저장</button>
@@ -192,12 +218,11 @@
     <button class="status-btn" onclick="setStatus('폐기', this)">폐기</button>
   </div>
 
-  <!-- 갤러리 -->
   <div class="gallery" id="gallery">
     <div class="spinner">불러오는 중...</div>
   </div>
 
-  <!-- 추가/편집 모달 -->
+  <!-- 모달 -->
   <div class="modal-overlay" id="memoModal">
     <div class="modal">
       <h2 id="modalTitle">메모 추가</h2>
@@ -216,7 +241,6 @@
       <div class="form-group">
         <label>활용도</label>
         <select id="fieldStatus">
-          <option value="">선택 안 함</option>
           <option value="분류 전">분류 전</option>
           <option value="만약을 위해 저장">만약을 위해 저장</option>
           <option value="꼭 필요함!!">꼭 필요함!!</option>
@@ -225,9 +249,7 @@
       </div>
       <div class="form-group">
         <label>BRAIN DUMP 폴더</label>
-        <select id="fieldFolder">
-          <option value="">폴더 없음</option>
-        </select>
+        <select id="fieldFolder"></select>
       </div>
       <div class="modal-actions">
         <button class="btn-cancel" onclick="closeModal()">취소</button>
@@ -237,86 +259,112 @@
   </div>
 
   <script>
-    // ── 상태 ────────────────────────────────────────────────────
     let allMemos = [];
     let folders = [];
-    let folderMap = {};      // id → name
+    let folderMap = {};
+    let currentPara = null;
     let currentFolder = null;
     let currentStatus = null;
-    let editingId = null;    // null이면 추가, page_id면 수정
+    let editingId = null;
+    let pendingFolderId = null; // Pending/Memo Box의 page id
 
     const STATUS_CLASS = {
-      '분류 전': '분류전',
-      '만약을 위해 저장': '저장',
-      '꼭 필요함!!': '필요',
-      '폐기': '폐기'
+      '분류 전': 's-분류전',
+      '만약을 위해 저장': 's-저장',
+      '꼭 필요함!!': 's-필요',
+      '폐기': 's-폐기'
     };
 
-    // ── 초기화 ──────────────────────────────────────────────────
     async function init() {
       await Promise.all([loadFolders(), loadMemos()]);
     }
 
-    // ── 폴더 로드 ────────────────────────────────────────────────
     async function loadFolders() {
       try {
         const res = await fetch('/api/notion?action=getFolders');
         const data = await res.json();
         folders = data.folders || [];
-
         folderMap = {};
-        folders.forEach(f => { folderMap[f.id] = f.name; });
-
-        // 필터 버튼 렌더링
-        const bar = document.getElementById('folderFilter');
-        bar.innerHTML = '<button class="filter-btn active" onclick="setFolder(null, this)">전체</button>';
         folders.forEach(f => {
-          const btn = document.createElement('button');
-          btn.className = 'filter-btn';
-          btn.textContent = f.name + (f.para ? ` · ${f.para}` : '');
-          btn.onclick = () => setFolder(f.id, btn);
-          bar.appendChild(btn);
+          folderMap[f.id] = f;
+          if (f.name === 'Pending/Memo Box') pendingFolderId = f.id;
         });
-
-        // 모달 폴더 셀렉트 채우기
-        const sel = document.getElementById('fieldFolder');
-        sel.innerHTML = '<option value="">폴더 없음</option>';
-        folders.forEach(f => {
-          const opt = document.createElement('option');
-          opt.value = f.id;
-          opt.textContent = f.name;
-          sel.appendChild(opt);
-        });
-
-      } catch (e) {
-        console.error('폴더 로드 실패:', e);
-      }
+        renderFolderBar();
+        populateFolderSelect();
+      } catch(e) { console.error('폴더 로드 실패:', e); }
     }
 
-    // ── 메모 로드 ────────────────────────────────────────────────
     async function loadMemos() {
       try {
-        const url = currentFolder
-          ? `/api/notion?action=getMemos&folder_id=${currentFolder}`
-          : '/api/notion?action=getMemos';
-        const res = await fetch(url);
+        const params = new URLSearchParams({ action: 'getMemos' });
+        if (currentFolder) params.set('folder_id', currentFolder);
+        const res = await fetch('/api/notion?' + params);
         const data = await res.json();
         allMemos = data.memos || [];
         renderGallery();
-      } catch (e) {
+      } catch(e) {
         console.error('메모 로드 실패:', e);
-        document.getElementById('gallery').innerHTML =
-          '<div class="empty">데이터를 불러오지 못했어요. F12 콘솔을 확인해주세요.</div>';
+        document.getElementById('gallery').innerHTML = '<div class="empty">데이터를 불러오지 못했어요. F12 콘솔을 확인해주세요.</div>';
       }
     }
 
-    // ── 렌더링 ───────────────────────────────────────────────────
+    /* 폴더 필터 바 렌더링 */
+    function renderFolderBar() {
+      const bar = document.getElementById('folderBar');
+      bar.innerHTML = '<button class="folder-btn active" onclick="setFolder(null, this)">전체</button>';
+
+      const filtered = currentPara === null
+        ? folders
+        : currentPara === 'pending'
+          ? folders.filter(f => !f.para)
+          : folders.filter(f => f.para === currentPara);
+
+      filtered.forEach(f => {
+        const btn = document.createElement('button');
+        btn.className = 'folder-btn';
+        btn.textContent = f.name;
+        btn.onclick = () => {
+          document.querySelectorAll('.folder-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          setFolder(f.id, btn);
+        };
+        bar.appendChild(btn);
+      });
+    }
+
+    /* 모달 폴더 셀렉트 */
+    function populateFolderSelect() {
+      const sel = document.getElementById('fieldFolder');
+      sel.innerHTML = '';
+      // Pending/Memo Box를 맨 위에
+      if (pendingFolderId) {
+        const opt = document.createElement('option');
+        opt.value = pendingFolderId;
+        opt.textContent = 'Pending/Memo Box';
+        sel.appendChild(opt);
+      }
+      folders.forEach(f => {
+        if (f.id === pendingFolderId) return;
+        const opt = document.createElement('option');
+        opt.value = f.id;
+        opt.textContent = f.name;
+        sel.appendChild(opt);
+      });
+    }
+
+    /* 갤러리 렌더링 */
     function renderGallery() {
       const gallery = document.getElementById('gallery');
       let memos = allMemos;
 
-      if (currentStatus) {
-        memos = memos.filter(m => m.status === currentStatus);
+      if (currentStatus) memos = memos.filter(m => m.status === currentStatus);
+
+      // PARA 탭 필터 (서버에서 folder_id로 필터링 안 한 경우에만 클라이언트 필터)
+      if (currentPara && !currentFolder) {
+        const paraFolderIds = currentPara === 'pending'
+          ? folders.filter(f => !f.para).map(f => f.id)
+          : folders.filter(f => f.para === currentPara).map(f => f.id);
+        memos = memos.filter(m => m.folders.some(id => paraFolderIds.includes(id)));
       }
 
       if (memos.length === 0) {
@@ -325,40 +373,45 @@
       }
 
       gallery.innerHTML = memos.map(m => {
-        const statusKey = STATUS_CLASS[m.status] || '';
-        const statusBadge = m.status
-          ? `<span class="badge-status ${statusKey}">${m.status}</span>` : '';
+        const sc = STATUS_CLASS[m.status] || 's-분류전';
+        const statusBadge = `<span class="badge-status ${sc}">${escHtml(m.status || '분류 전')}</span>`;
         const folderBadges = m.folders
           .filter(id => folderMap[id])
-          .map(id => `<span class="badge-folder">${folderMap[id]}</span>`)
+          .map(id => `<span class="badge-folder">${escHtml(folderMap[id].name)}</span>`)
           .join('');
-        const urlLink = m.url
-          ? `<a class="card-url" href="${m.url}" target="_blank" onclick="event.stopPropagation()">🔗 ${m.url}</a>` : '';
+        const linkBtn = m.url
+          ? `<a class="card-link" href="${escHtml(m.url)}" target="_blank" onclick="event.stopPropagation()">링크</a>`
+          : '';
 
         return `
           <div class="card" onclick="openEditModal('${m.id}')">
-            <div class="card-header">
-              <div class="card-title">${escHtml(m.idea || '(제목 없음)')}</div>
-              <button class="card-edit-btn" onclick="event.stopPropagation(); openEditModal('${m.id}')">✏️</button>
-            </div>
+            <div class="card-title">${escHtml(m.idea || '(제목 없음)')}</div>
             ${m.content ? `<div class="card-content">${escHtml(m.content)}</div>` : ''}
-            <div class="card-footer">
-              ${statusBadge}
-              ${folderBadges}
-            </div>
-            ${urlLink}
+            <div class="card-meta">${statusBadge}${folderBadges}</div>
+            ${linkBtn}
           </div>`;
       }).join('');
     }
 
-    // ── 필터 ─────────────────────────────────────────────────────
+    /* PARA 탭 */
+    function setPara(val, btn) {
+      currentPara = val;
+      currentFolder = null;
+      document.querySelectorAll('.para-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderFolderBar();
+      loadMemos();
+    }
+
+    /* 폴더 필터 */
     function setFolder(id, btn) {
       currentFolder = id;
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.folder-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       loadMemos();
     }
 
+    /* 상태 필터 */
     function setStatus(val, btn) {
       currentStatus = val;
       document.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'));
@@ -366,15 +419,16 @@
       renderGallery();
     }
 
-    // ── 모달 열기/닫기 ───────────────────────────────────────────
+    /* 모달 */
     function openAddModal() {
       editingId = null;
       document.getElementById('modalTitle').textContent = '메모 추가';
       document.getElementById('fieldIdea').value = '';
       document.getElementById('fieldContent').value = '';
       document.getElementById('fieldUrl').value = '';
-      document.getElementById('fieldStatus').value = '';
-      document.getElementById('fieldFolder').value = '';
+      document.getElementById('fieldStatus').value = '분류 전';
+      const sel = document.getElementById('fieldFolder');
+      if (pendingFolderId) sel.value = pendingFolderId;
       document.getElementById('memoModal').classList.add('open');
     }
 
@@ -386,32 +440,28 @@
       document.getElementById('fieldIdea').value = memo.idea || '';
       document.getElementById('fieldContent').value = memo.content || '';
       document.getElementById('fieldUrl').value = memo.url || '';
-      document.getElementById('fieldStatus').value = memo.status || '';
-      document.getElementById('fieldFolder').value = memo.folders[0] || '';
+      document.getElementById('fieldStatus').value = memo.status || '분류 전';
+      const sel = document.getElementById('fieldFolder');
+      sel.value = memo.folders[0] || (pendingFolderId || '');
       document.getElementById('memoModal').classList.add('open');
     }
 
-    function closeModal() {
-      document.getElementById('memoModal').classList.remove('open');
-    }
+    function closeModal() { document.getElementById('memoModal').classList.remove('open'); }
 
-    // 모달 외부 클릭 시 닫기
     document.getElementById('memoModal').addEventListener('click', e => {
       if (e.target === e.currentTarget) closeModal();
     });
 
-    // ── 저장 (추가 or 수정) ──────────────────────────────────────
     async function saveMemo() {
       const btn = document.getElementById('btnSave');
-      btn.disabled = true;
-      btn.textContent = '저장 중...';
+      btn.disabled = true; btn.textContent = '저장 중...';
 
       const idea = document.getElementById('fieldIdea').value.trim();
       const content = document.getElementById('fieldContent').value.trim();
       const url = document.getElementById('fieldUrl').value.trim();
       const status = document.getElementById('fieldStatus').value;
-      const folderId = document.getElementById('fieldFolder').value;
-      const folder_ids = folderId ? [folderId] : [];
+      const folderId = document.getElementById('fieldFolder').value || pendingFolderId;
+      const folder_ids = folderId ? [folderId] : (pendingFolderId ? [pendingFolderId] : []);
 
       try {
         const action = editingId ? 'updateMemo' : 'addMemo';
@@ -419,33 +469,25 @@
           ? { page_id: editingId, idea, content, url, status, folder_ids }
           : { idea, content, url, status, folder_ids };
 
-        const res = await fetch(`/api/notion?action=${action}`, {
+        const res = await fetch('/api/notion?action=' + action, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body)
         });
         const data = await res.json();
-
-        if (data.success) {
-          closeModal();
-          await loadMemos();
-        } else {
-          alert('저장 실패: ' + (data.error || '알 수 없는 오류'));
-        }
-      } catch (e) {
-        alert('저장 중 오류가 발생했어요: ' + e.message);
+        if (data.success) { closeModal(); await loadMemos(); }
+        else alert('저장 실패: ' + (data.error || '알 수 없는 오류'));
+      } catch(e) {
+        alert('저장 중 오류: ' + e.message);
       } finally {
-        btn.disabled = false;
-        btn.textContent = '저장';
+        btn.disabled = false; btn.textContent = '저장';
       }
     }
 
-    // ── 유틸 ─────────────────────────────────────────────────────
     function escHtml(str) {
-      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
-    // ── 시작 ─────────────────────────────────────────────────────
     init();
   </script>
 </body>

@@ -17,9 +17,12 @@ module.exports = async (req, res) => {
 
     // ── 폴더(BRAIN DUMP) 목록 조회 ──────────────────────────────
     if (action === 'getFolders') {
-      const response = await notion.databases.query({
-        database_id: FOLDER_DB_ID,
-        sorts: [{ property: '이름', direction: 'ascending' }]
+      const response = await notion.request({
+        path: `data_sources/${FOLDER_DB_ID}/query`,
+        method: 'POST',
+        body: {
+          sorts: [{ property: '이름', direction: 'ascending' }]
+        }
       });
       const folders = response.results.map(page => ({
         id: page.id,

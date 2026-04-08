@@ -1,8 +1,8 @@
 const { Client } = require('@notionhq/client');
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
-const MEMO_DB_ID = process.env.NOTION_DATABASE_ID;       // 메모 아카이브 DB
-const FOLDER_DB_ID = process.env.NOTION_FOLDER_DB_ID;   // BRAIN DUMP DB
+const MEMO_DB_ID = process.env.NOTION_DATABASE_ID;       // 메모 아카이브 data_source_id
+const FOLDER_DB_ID = process.env.NOTION_FOLDER_DB_ID;   // BRAIN DUMP data_source_id
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
 
   try {
 
-    // ── 폴더(BRAIN DUMP) 목록 조회 ──────────────────────────────
+    // 폴더(BRAIN DUMP) 목록 조회
     if (action === 'getFolders') {
       const response = await notion.dataSources.query({
         data_source_id: FOLDER_DB_ID,
@@ -29,15 +29,15 @@ module.exports = async (req, res) => {
       return res.json({ folders });
     }
 
-    // ── 메모 목록 조회 ───────────────────────────────────────────
+    // 메모 목록 조회
     if (action === 'getMemos') {
       const filter = req.query.folder_id ? {
         property: 'BRAIN DUMP',
         relation: { contains: req.query.folder_id }
       } : undefined;
 
-      const response = await notion.databases.query({
-        database_id: MEMO_DB_ID,
+      const response = await notion.dataSources.query({
+        data_source_id: MEMO_DB_ID,
         filter,
         sorts: [{ property: '생성 일시', direction: 'descending' }]
       });
@@ -55,7 +55,7 @@ module.exports = async (req, res) => {
       return res.json({ memos });
     }
 
-    // ── 메모 추가 ────────────────────────────────────────────────
+    // 메모 추가
     if (action === 'addMemo') {
       const { idea, content, status, url, folder_ids } = req.body;
 
@@ -73,14 +73,14 @@ module.exports = async (req, res) => {
       }
 
       const page = await notion.pages.create({
-        parent: { database_id: MEMO_DB_ID },
+        parent: { type: 'data_source_id', data_source_id: MEMO_DB_ID },
         properties
       });
 
       return res.json({ success: true, id: page.id });
     }
 
-    // ── 메모 수정 ────────────────────────────────────────────────
+    // 메모 수정
     if (action === 'updateMemo') {
       const { page_id, idea, content, status, url, folder_ids } = req.body;
 

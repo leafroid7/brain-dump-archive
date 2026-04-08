@@ -8,7 +8,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; min-height: 100vh; }
 
-    /* 상단 바 */
     .topbar { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #e5e5e5; padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
     .topbar h1 { font-size: 15px; font-weight: 700; flex: 1; }
     .btn-add { background: #1a1a1a; color: #fff; border: none; border-radius: 8px; padding: 8px 14px; font-size: 13px; cursor: pointer; white-space: nowrap; }
@@ -21,7 +20,7 @@
     .para-btn:hover { color: #333; }
     .para-btn.active { color: #e8600a; border-bottom-color: #e8600a; font-weight: 700; }
 
-    /* 폴더 필터 — 어두운 배경 */
+    /* 폴더 바 */
     .folder-bar { background: #2a2a2a; padding: 8px 16px; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
     .folder-bar::-webkit-scrollbar { display: none; }
     .folder-btn { padding: 4px 10px; border-radius: 20px; font-size: 11px; border: 1px solid #444; background: #3a3a3a; cursor: pointer; color: #ccc; white-space: nowrap; transition: all 0.15s; display: inline-flex; align-items: center; gap: 4px; }
@@ -29,18 +28,37 @@
     .folder-btn.active { background: #e8600a; color: #fff; border-color: #e8600a; }
     .folder-icon { font-size: 12px; }
 
-    /* IPOR 컬러 도트 */
+    /* IPOR 도트 */
     .ipor-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
     .ipor-INPUT   { background: #f87171; }
     .ipor-PROCESS { background: #fbbf24; }
     .ipor-OUTPUT  { background: #34d399; }
     .ipor-REST    { background: #94a3b8; }
 
-    /* 상태 필터 */
-    .status-bar { background: #f5f5f0; padding: 8px 16px; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+    /* 활용도 필터 — 태그 스타일 */
+    .status-bar { background: #f5f5f0; padding: 8px 16px; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; align-items: center; }
     .status-bar::-webkit-scrollbar { display: none; }
-    .status-btn { padding: 4px 12px; border-radius: 20px; font-size: 11px; border: 1px solid #ddd; background: #fff; cursor: pointer; color: #666; white-space: nowrap; transition: all 0.15s; }
-    .status-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .status-label { font-size: 11px; color: #aaa; white-space: nowrap; margin-right: 2px; }
+    .status-btn {
+      padding: 3px 10px; border-radius: 4px; font-size: 11px;
+      border: none; cursor: pointer; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 5px;
+      font-weight: 500; transition: opacity 0.15s;
+      opacity: 0.45;
+    }
+    .status-btn.active { opacity: 1; }
+    .status-btn:hover { opacity: 0.8; }
+    .sb-all   { background: #e8e8e8; color: #555; }
+    .sb-분류전 { background: #e8e8e8; color: #555; }
+    .sb-저장  { background: #dbeafe; color: #2563eb; }
+    .sb-필요  { background: #ffedd5; color: #c2410c; }
+    .sb-폐기  { background: #ede9fe; color: #7c3aed; }
+    .sdot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .sdot-all   { background: #aaa; }
+    .sdot-분류전 { background: #bbb; }
+    .sdot-저장  { background: #2563eb; }
+    .sdot-필요  { background: #c2410c; }
+    .sdot-폐기  { background: #7c3aed; }
 
     /* 갤러리 */
     .gallery { padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
@@ -50,30 +68,32 @@
     .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); transform: translateY(-2px); }
     .card-title { font-size: 14px; font-weight: 600; line-height: 1.4; margin-bottom: 8px; }
     .card-content { font-size: 12px; color: #666; line-height: 1.5; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-    .card-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+    .card-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
 
-    /* 활용도 배지 — 노션 스타일 도트 */
-    .badge-status { font-size: 11px; padding: 2px 8px; border-radius: 20px; display: inline-flex; align-items: center; gap: 5px; font-weight: 500; }
+    /* 활용도 배지 */
+    .badge-status { font-size: 11px; padding: 2px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 5px; font-weight: 500; }
     .status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
     .s-분류전 { background: #f0f0f0; color: #777; }
     .s-분류전 .status-dot { background: #bbb; }
-    .s-저장   { background: #e8f4fd; color: #3a86c8; }
-    .s-저장   .status-dot { background: #3a86c8; }
-    .s-필요   { background: #fff0e0; color: #d4870a; }
-    .s-필요   .status-dot { background: #d4870a; }
-    .s-폐기   { background: #f0e8fd; color: #9b5de5; }
-    .s-폐기   .status-dot { background: #9b5de5; }
+    .s-저장   { background: #dbeafe; color: #2563eb; }
+    .s-저장   .status-dot { background: #2563eb; }
+    .s-필요   { background: #ffedd5; color: #c2410c; }
+    .s-필요   .status-dot { background: #c2410c; }
+    .s-폐기   { background: #ede9fe; color: #7c3aed; }
+    .s-폐기   .status-dot { background: #7c3aed; }
 
     /* 폴더 배지 */
-    .badge-folder { font-size: 10px; padding: 2px 7px; border-radius: 20px; background: #f0f0f0; color: #555; display: inline-flex; align-items: center; gap: 4px; }
+    .badge-folder { font-size: 10px; padding: 2px 7px; border-radius: 20px; background: #f0f0f0; color: #555; display: inline-flex; align-items: center; gap: 3px; }
     .badge-folder-icon { font-size: 11px; }
-    .badge-para { font-size: 9px; color: #999; font-weight: 400; }
+    .badge-para-tag { font-size: 9px; background: #e0e0e0; color: #888; border-radius: 3px; padding: 1px 4px; font-weight: 600; }
+
+    /* 날짜 */
+    .card-date { font-size: 10px; color: #bbb; margin-bottom: 6px; }
 
     /* 링크 버튼 */
-    .card-link { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: #3a86c8; background: #e8f4fd; border-radius: 6px; padding: 3px 9px; text-decoration: none; margin-top: 4px; transition: background 0.15s; }
-    .card-link:hover { background: #c8e4f8; }
+    .card-link { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: #2563eb; background: #dbeafe; border-radius: 6px; padding: 3px 9px; text-decoration: none; margin-top: 2px; transition: background 0.15s; }
+    .card-link:hover { background: #bfdbfe; }
 
-    /* 스피너 */
     .spinner { display: flex; justify-content: center; padding: 60px; font-size: 13px; color: #aaa; }
 
     /* 모달 */
@@ -85,11 +105,11 @@
     .form-group label { display: block; font-size: 11px; color: #888; margin-bottom: 5px; font-weight: 600; letter-spacing: 0.03em; }
     .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 9px 11px; border-radius: 8px; border: 1px solid #e0e0e0; font-size: 13px; font-family: inherit; resize: vertical; }
     .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: #1a1a1a; }
+    .modal-date { font-size: 11px; color: #bbb; margin-bottom: 16px; }
     .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
     .btn-cancel { padding: 8px 16px; border-radius: 8px; font-size: 13px; border: 1px solid #e0e0e0; background: #fff; cursor: pointer; }
     .btn-save { padding: 8px 16px; border-radius: 8px; font-size: 13px; border: none; background: #1a1a1a; color: #fff; cursor: pointer; }
     .btn-save:disabled { background: #ccc; cursor: not-allowed; }
-
     .empty { text-align: center; padding: 60px 24px; color: #aaa; font-size: 13px; }
   </style>
 </head>
@@ -100,7 +120,7 @@
     <button class="btn-add" onclick="openAddModal()">＋ 메모 추가</button>
   </div>
 
-  <div class="para-bar" id="paraBar">
+  <div class="para-bar">
     <button class="para-btn active" onclick="setPara(null, this)">전체</button>
     <button class="para-btn" onclick="setPara('pending', this)">Pending</button>
     <button class="para-btn" onclick="setPara('𝗣 | 현재 진행', this)">𝗣 현재 진행</button>
@@ -114,11 +134,12 @@
   </div>
 
   <div class="status-bar">
-    <button class="status-btn active" onclick="setStatus(null, this)">전체</button>
-    <button class="status-btn" onclick="setStatus('분류 전', this)">분류 전</button>
-    <button class="status-btn" onclick="setStatus('만약을 위해 저장', this)">만약을 위해 저장</button>
-    <button class="status-btn" onclick="setStatus('꼭 필요함!!', this)">꼭 필요함!!</button>
-    <button class="status-btn" onclick="setStatus('폐기', this)">폐기</button>
+    <span class="status-label">활용도</span>
+    <button class="status-btn sb-all active" onclick="setStatus(null, this)"><span class="sdot sdot-all"></span>전체</button>
+    <button class="status-btn sb-분류전" onclick="setStatus('분류 전', this)"><span class="sdot sdot-분류전"></span>분류 전</button>
+    <button class="status-btn sb-저장" onclick="setStatus('만약을 위해 저장', this)"><span class="sdot sdot-저장"></span>만약을 위해 저장</button>
+    <button class="status-btn sb-필요" onclick="setStatus('꼭 필요함!!', this)"><span class="sdot sdot-필요"></span>꼭 필요함!!</button>
+    <button class="status-btn sb-폐기" onclick="setStatus('폐기', this)"><span class="sdot sdot-폐기"></span>폐기</button>
   </div>
 
   <div class="gallery" id="gallery">
@@ -128,6 +149,7 @@
   <div class="modal-overlay" id="memoModal">
     <div class="modal">
       <h2 id="modalTitle">메모 추가</h2>
+      <div class="modal-date" id="modalDate"></div>
       <div class="form-group">
         <label>IDEA (제목)</label>
         <input type="text" id="fieldIdea" placeholder="아이디어나 메모 제목" />
@@ -181,14 +203,15 @@
       '𝗣 | 현재 진행': 'P',
       '𝗔 | 상시 진행': 'A',
       '𝗥 | 관심분야': 'R',
-      '𝗔 | 보관함': 'A'
+      '𝗔 | 보관함': 'A★'
     };
 
+    // 볼드 특수문자 IPOR값 → CSS 클래스 매핑
     const IPOR_CLASS = {
-      'INPUT': 'ipor-INPUT',
-      'PROCESS': 'ipor-PROCESS',
-      'OUTPUT': 'ipor-OUTPUT',
-      'REST': 'ipor-REST'
+      '𝗜𝗡𝗣𝗨𝗧':   'ipor-INPUT',
+      '𝗣𝗥𝗢𝗖𝗘𝗦𝗦': 'ipor-PROCESS',
+      '𝗢𝗨𝗧𝗣𝗨𝗧':  'ipor-OUTPUT',
+      '𝗥𝗘𝗦𝗧':    'ipor-REST'
     };
 
     async function init() {
@@ -236,12 +259,10 @@
       filtered.forEach(f => {
         const btn = document.createElement('button');
         btn.className = 'folder-btn';
-
         const iconEl = f.icon ? `<span class="folder-icon">${f.icon}</span>` : '';
-        const dotClass = f.ipor ? IPOR_CLASS[f.ipor] || '' : '';
+        const dotClass = f.ipor ? (IPOR_CLASS[f.ipor] || '') : '';
         const dotEl = dotClass ? `<span class="ipor-dot ${dotClass}"></span>` : '';
         btn.innerHTML = `${dotEl}${iconEl}${escHtml(f.name)}`;
-
         btn.onclick = () => {
           document.querySelectorAll('.folder-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
@@ -269,6 +290,12 @@
       });
     }
 
+    function formatDate(iso) {
+      if (!iso) return '';
+      const d = new Date(iso);
+      return d.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
     function renderGallery() {
       const gallery = document.getElementById('gallery');
       let memos = allMemos;
@@ -289,18 +316,19 @@
 
       gallery.innerHTML = memos.map(m => {
         const sc = STATUS_CLASS[m.status] || 's-분류전';
-        const statusLabel = m.status || '분류 전';
-        const statusBadge = `<span class="badge-status ${sc}"><span class="status-dot"></span>${escHtml(statusLabel)}</span>`;
+        const statusBadge = `<span class="badge-status ${sc}"><span class="status-dot"></span>${escHtml(m.status || '분류 전')}</span>`;
 
         const folderBadges = m.folders
           .filter(id => folderMap[id])
           .map(id => {
             const f = folderMap[id];
             const iconEl = f.icon ? `<span class="badge-folder-icon">${f.icon}</span>` : '📁';
-            const paraEl = f.para ? ` <span class="badge-para">${PARA_SHORT[f.para] || ''}</span>` : '';
-            return `<span class="badge-folder">${iconEl}${escHtml(f.name)}${paraEl}</span>`;
+            const paraShort = f.para ? PARA_SHORT[f.para] || '' : '';
+            const paraTag = paraShort ? `<span class="badge-para-tag">${paraShort}</span>` : '';
+            return `<span class="badge-folder">${iconEl}${escHtml(f.name)}${paraTag}</span>`;
           }).join('');
 
+        const dateStr = m.created ? `<div class="card-date">${formatDate(m.created)}</div>` : '';
         const linkBtn = m.url
           ? `<a class="card-link" href="${escHtml(m.url)}" target="_blank" onclick="event.stopPropagation()">🔗 링크</a>`
           : '';
@@ -310,6 +338,7 @@
             <div class="card-title">${escHtml(m.idea || '(제목 없음)')}</div>
             ${m.content ? `<div class="card-content">${escHtml(m.content)}</div>` : ''}
             <div class="card-meta">${statusBadge}${folderBadges}</div>
+            ${dateStr}
             ${linkBtn}
           </div>`;
       }).join('');
@@ -341,6 +370,7 @@
     function openAddModal() {
       editingId = null;
       document.getElementById('modalTitle').textContent = '메모 추가';
+      document.getElementById('modalDate').textContent = '';
       document.getElementById('fieldIdea').value = '';
       document.getElementById('fieldContent').value = '';
       document.getElementById('fieldUrl').value = '';
@@ -355,6 +385,7 @@
       if (!memo) return;
       editingId = pageId;
       document.getElementById('modalTitle').textContent = '메모 편집';
+      document.getElementById('modalDate').textContent = memo.created ? '추가된 날짜: ' + formatDate(memo.created) : '';
       document.getElementById('fieldIdea').value = memo.idea || '';
       document.getElementById('fieldContent').value = memo.content || '';
       document.getElementById('fieldUrl').value = memo.url || '';
@@ -365,31 +396,24 @@
     }
 
     function closeModal() { document.getElementById('memoModal').classList.remove('open'); }
-
-    document.getElementById('memoModal').addEventListener('click', e => {
-      if (e.target === e.currentTarget) closeModal();
-    });
+    document.getElementById('memoModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 
     async function saveMemo() {
       const btn = document.getElementById('btnSave');
       btn.disabled = true; btn.textContent = '저장 중...';
-
       const idea = document.getElementById('fieldIdea').value.trim();
       const content = document.getElementById('fieldContent').value.trim();
       const url = document.getElementById('fieldUrl').value.trim();
       const status = document.getElementById('fieldStatus').value;
       const folderId = document.getElementById('fieldFolder').value || pendingFolderId;
       const folder_ids = folderId ? [folderId] : (pendingFolderId ? [pendingFolderId] : []);
-
       try {
         const action = editingId ? 'updateMemo' : 'addMemo';
         const body = editingId
           ? { page_id: editingId, idea, content, url, status, folder_ids }
           : { idea, content, url, status, folder_ids };
-
         const res = await fetch('/api/notion?action=' + action, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body)
         });
         const data = await res.json();
